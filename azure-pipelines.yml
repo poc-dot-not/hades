@@ -13,19 +13,21 @@ variables:
   buildConfiguration: 'Release'
   serviceProjectName: 'Hades.Server'
 
-
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.0.x'
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: 'restore'
-    projects: '**/$(serviceProjectName).csproj'
+    projects: '**/*.csproj'
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.config'
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: 'build'
-    projects: '**/$(serviceProjectName).csproj'
+    projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
-    workingDirectory: 'build/$(serviceProjectName)'
