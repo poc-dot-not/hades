@@ -2,6 +2,7 @@
 using Hades.Shared;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hades.Server.Services
@@ -15,7 +16,7 @@ namespace Hades.Server.Services
             this.logger = logger;
         }
 
-        public override Task<AddAlphaResponse> AddAlpha(AddAlphaRequest request, ServerCallContext context)
+        public override async Task<AddAlphaResponse> AddAlpha(AddAlphaRequest request, ServerCallContext context)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
@@ -26,25 +27,35 @@ namespace Hades.Server.Services
                 Id = request.Id
             };
 
+            await Task.Delay(100);
+
             logger.LogInformation(response.ToString());
 
-            return Task.FromResult(response);
+            return response;
         }
 
-        public override Task<GetAlphaResponse> GetAlpha(GetAlphaRequest request, ServerCallContext context)
+        public override async Task<GetAlphaResponse> GetAlpha(GetAlphaRequest request, ServerCallContext context)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             logger.LogInformation(request.ToString());
 
+            var data = Enumerable
+                .Range(1, 10)
+                .Select(x => $"record_{x}")
+                .ToArray();
+
             var response = new GetAlphaResponse
             {
-                Id = request.Id
+                Id = request.Id,
+                Data = { data }
             };
+
+            await Task.Delay(50);
 
             logger.LogInformation(response.ToString());
 
-            return Task.FromResult(response);
+            return response;
         }
     }
 }

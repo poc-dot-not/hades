@@ -2,6 +2,7 @@
 using Hades.Shared;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hades.Server.Services
@@ -15,7 +16,7 @@ namespace Hades.Server.Services
             this.logger = logger;
         }
 
-        public override Task<AddBetaResponse> AddBeta(AddBetaRequest request, ServerCallContext context)
+        public override async Task<AddBetaResponse> AddBeta(AddBetaRequest request, ServerCallContext context)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
@@ -26,25 +27,39 @@ namespace Hades.Server.Services
                 Id = request.Id
             };
 
+            await Task.Delay(100);
+
             logger.LogInformation(response.ToString());
 
-            return Task.FromResult(response);
+            return response;
         }
 
-        public override Task<GetBetaResponse> GetBeta(GetBetaRequest request, ServerCallContext context)
+        public override async Task<GetBetaResponse> GetBeta(GetBetaRequest request, ServerCallContext context)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
             logger.LogInformation(request.ToString());
 
+            var data = Enumerable
+                .Range(1, 10)
+                .Select(x => new BetaDto
+                {
+                    Id = x,
+                    Data = $"record_{x}"
+                })
+                .ToArray();
+
             var response = new GetBetaResponse
             {
-                Id = request.Id
+                Id = request.Id,
+                Data = { data }
             };
+
+            await Task.Delay(50);
 
             logger.LogInformation(response.ToString());
 
-            return Task.FromResult(response);
+            return response;
         }
     }
 }
