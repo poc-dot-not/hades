@@ -11,7 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  serviceProjectName: 'Hades.Server'
+  projectName: 'Hades'
 
 steps:
 - task: UseDotNet@2
@@ -32,3 +32,10 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/$(projectName).Client.csproj'
+    arguments: '-c $(buildConfiguration) -o $(Build.StagingDirectory)/build --no-build'
+    zipAfterPublish: false
