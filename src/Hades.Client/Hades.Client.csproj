@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.10.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.23.2" />
+    <PackageReference Include="Grpc.Tools" Version="2.24.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Hades.Shared\Protos\alpha.proto" GrpcServices="Client" Link="Protos\alpha.proto" />
+    <Protobuf Include="..\Hades.Shared\Protos\beta.proto" GrpcServices="Client" Link="Protos\beta.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hades.Shared\Hades.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

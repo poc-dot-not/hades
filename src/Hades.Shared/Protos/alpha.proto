@@ -1,0 +1,29 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Hades.Shared";
+
+package Alpha;
+
+service Alpha {
+	rpc AddAlpha(AddAlphaRequest) returns (AddAlphaResponse);
+	rpc GetAlpha(GetAlphaRequest) returns (GetAlphaResponse);
+	// TODO: stream
+}
+
+message AddAlphaRequest {
+	string id = 1;
+	repeated string data = 2;
+}
+
+message AddAlphaResponse {
+	string id = 1;
+}
+
+message GetAlphaRequest {
+	string id = 1;
+}
+
+message GetAlphaResponse {
+	string id = 1;
+	repeated string data = 2;
+}
