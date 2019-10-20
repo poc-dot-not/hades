@@ -7,7 +7,6 @@ package Alpha;
 service Alpha {
 	rpc AddAlpha(AddAlphaRequest) returns (AddAlphaResponse);
 	rpc GetAlpha(GetAlphaRequest) returns (GetAlphaResponse);
-	// TODO: stream
 }
 
 message AddAlphaRequest {

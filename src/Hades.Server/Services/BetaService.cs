@@ -61,5 +61,35 @@ namespace Hades.Server.Services
 
             return response;
         }
+
+        public override async Task GetBetaStream(GetBetaRequest request, IServerStreamWriter<BetaDto> responseStream, ServerCallContext context)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+
+            logger.LogInformation(request.ToString());
+
+            var iteration = 1;
+            while (!context.CancellationToken.IsCancellationRequested && iteration <= 10)
+            {
+                await Task.Delay(100);
+
+                var response = new BetaDto
+                {
+                    Id = iteration,
+                    Data = $"record_{iteration}"
+                };
+
+                logger.LogInformation(response.ToString());
+
+                await responseStream.WriteAsync(response);
+
+                iteration++;
+            }
+
+            if (context.CancellationToken.IsCancellationRequested)
+            {
+                 logger.LogInformation("The request canceled by the client!");
+            }
+        }
     }
 }

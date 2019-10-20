@@ -1,5 +1,8 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
 using Hades.Shared;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hades.Client
@@ -13,32 +16,45 @@ namespace Hades.Client
             channel = GrpcChannel.ForAddress(address);
         }
 
-        public async Task<AddAlphaResponse> AddAlphaAsync(AddAlphaRequest request)
+        public async Task<AddAlphaResponse> AddAlphaAsync(AddAlphaRequest request, CancellationToken cancellationToken = default)
         {
             var client = new Alpha.AlphaClient(channel);
 
-            return await client.AddAlphaAsync(request);
+            return await client.AddAlphaAsync(request, cancellationToken: cancellationToken);
         }
 
-        public async Task<AddBetaResponse> AddBetaAsync(AddBetaRequest request)
+        public async Task<AddBetaResponse> AddBetaAsync(AddBetaRequest request, CancellationToken cancellationToken = default)
         {
             var client = new Beta.BetaClient(channel);
 
-            return await client.AddBetaAsync(request);
+            return await client.AddBetaAsync(request, cancellationToken: cancellationToken);
         }
 
-        public async Task<GetAlphaResponse> GetAlphaAsync(GetAlphaRequest request)
+        public async Task<GetAlphaResponse> GetAlphaAsync(GetAlphaRequest request, CancellationToken cancellationToken = default)
         {
             var client = new Alpha.AlphaClient(channel);
 
-            return await client.GetAlphaAsync(request);
+            return await client.GetAlphaAsync(request, cancellationToken: cancellationToken);
         }
 
-        public async Task<GetBetaResponse> GetBetaAsync(GetBetaRequest request)
+        public async Task<GetBetaResponse> GetBetaAsync(GetBetaRequest request, CancellationToken cancellationToken = default)
         {
             var client = new Beta.BetaClient(channel);
 
-            return await client.GetBetaAsync(request);
+            return await client.GetBetaAsync(request, cancellationToken: cancellationToken);
+        }
+
+        public async IAsyncEnumerable<BetaDto> GetBetaStreamAsync(GetBetaRequest request, CancellationToken cancellationToken = default)
+        {
+            var client = new Beta.BetaClient(channel);
+
+            using (var stream = client.GetBetaStream(request, cancellationToken: cancellationToken))
+            {
+                await foreach (var dto in stream.ResponseStream.ReadAllAsync(cancellationToken))
+                {
+                    yield return dto;
+                }
+            }
         }
 
         public void Dispose()

@@ -7,12 +7,7 @@ package Beta;
 service Beta {
 	rpc AddBeta(AddBetaRequest) returns (AddBetaResponse);
 	rpc GetBeta(GetBetaRequest) returns (GetBetaResponse);
-	// TODO: stream
-}
-
-message BetaDto {
-	int32 id = 1;
-	string data = 2;
+	rpc GetBetaStream(GetBetaRequest) returns (stream BetaDto);
 }
 
 message AddBetaRequest {
@@ -31,4 +26,9 @@ message GetBetaRequest {
 message GetBetaResponse {
 	string id = 1;
 	repeated BetaDto data = 2;
+}
+
+message BetaDto {
+	int32 id = 1;
+	string data = 2;
 }

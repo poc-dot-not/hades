@@ -50,6 +50,28 @@ namespace Hades.IntegrationTests.Client
             Assert.Equal(DataCount, response.Data.Count);
         }
 
+        [Fact]
+        public async Task GetBetaStream_Success()
+        {
+            var request = new GetBetaRequest
+            {
+                Id = Guid.NewGuid().ToString()
+            };
+
+            var stream = client.GetBetaStreamAsync(request);
+
+            var iteration = 0;
+            await foreach (var dto in stream)
+            {
+                iteration++;
+
+                Assert.NotNull(dto);
+                Assert.Equal(iteration, dto.Id);
+            }
+
+            Assert.Equal(DataCount, iteration);
+        }
+
         private static BetaDto[] GenerateData()
         {
             var data = Enumerable
