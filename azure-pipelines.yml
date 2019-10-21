@@ -7,18 +7,18 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-2019'
 
 variables:
   buildConfiguration: 'Release'
   projectName: 'Hades'
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Install .NET Core 3.0 SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '3.0.x'
+#- task: UseDotNet@2
+#  displayName: 'Install .NET Core 3.0 SDK'
+#  inputs:
+#    packageType: 'sdk'
+#    version: '3.0.x'
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
@@ -33,7 +33,7 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
 - task: DotNetCoreCLI@2
-  displayName: "Pack client"
+  displayName: 'Pack Client'
   inputs:
     command: 'pack'
     arguments: '--configuration $(buildConfiguration)'
@@ -41,7 +41,7 @@ steps:
     nobuild: true
     versioningScheme: 'off'
 - task: NuGetCommand@2
-  displayName: 'Push client'
+  displayName: 'Push Client'
   inputs:
     command: 'push'
     feedsToUse: 'select'
