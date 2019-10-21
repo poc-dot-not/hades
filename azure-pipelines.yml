@@ -30,7 +30,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/$(projectName).Client.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
 - task: DotNetCoreCLI@2
   displayName: 'Pack Client'
