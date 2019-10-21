@@ -33,9 +33,20 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
 - task: DotNetCoreCLI@2
+  displayName: "Pack client"
   inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '**/$(projectName).Client.csproj'
-    arguments: '-c $(buildConfiguration) -o $(Build.StagingDirectory)/build --no-build'
-    zipAfterPublish: false
+    command: 'pack'
+    arguments: '--configuration $(buildConfiguration)'
+    packagesToPack: '**/$(projectName).Client.csproj'
+    nobuild: true
+    versioningScheme: 'off'
+- task: NuGetCommand@2
+  displayName: 'Push client'
+  inputs:
+    command: 'push'
+    feedsToUse: 'select'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: 'poc-dot-not-clients'
+    versioningScheme: 'off'
+    allowPackageConflicts: true
