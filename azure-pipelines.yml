@@ -31,12 +31,12 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-restore'
+    arguments: '-c $(buildConfiguration) --no-restore'
 - task: DotNetCoreCLI@2
   displayName: 'Pack Client'
   inputs:
     command: 'pack'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '-c $(buildConfiguration) /p:PackageVersion=1.$(Build.BuildNumber)'
     packagesToPack: '**/$(projectName).Client.csproj'
     nobuild: true
     versioningScheme: 'off'
