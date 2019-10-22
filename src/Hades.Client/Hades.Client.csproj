@@ -4,24 +4,23 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
-  <!--<PropertyGroup>
+  <PropertyGroup>
     <PackageId>PoC.NOT.Hades.Client</PackageId>
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>PoC.NOT - Hades.Client project</Description>
     <Authors>PoC.NOT</Authors>
     <Company>PoC.NOT</Company>
     <Title>Hades.Client</Title>
-    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <AssemblyName>Hades.Client</AssemblyName>
     <PackageTags>PoC.NOT</PackageTags>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/poc-dot-not/hades</PackageProjectUrl>
     <RepositoryUrl>https://github.com/poc-dot-not/hades</RepositoryUrl>
-  </PropertyGroup>-->
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.10.0" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.23.2" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.24.0" />
     <PackageReference Include="Grpc.Tools" Version="2.24.0" PrivateAssets="All" />
   </ItemGroup>
 

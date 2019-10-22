@@ -2,6 +2,7 @@
 using Grpc.Net.Client;
 using Hades.Shared;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,7 +45,7 @@ namespace Hades.Client
             return await client.GetBetaAsync(request, cancellationToken: cancellationToken);
         }
 
-        public async IAsyncEnumerable<BetaDto> GetBetaStreamAsync(GetBetaRequest request, CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<BetaDto> GetBetaStreamAsync(GetBetaRequest request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var client = new Beta.BetaClient(channel);
 
