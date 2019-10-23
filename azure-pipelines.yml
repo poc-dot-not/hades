@@ -10,6 +10,8 @@ pool:
   vmImage: 'windows-2019'
 
 variables:
+  Version.MajorMinor: 1.0
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
   buildConfiguration: 'Release'
   projectName: 'Hades'
 
@@ -35,7 +37,7 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'echo $(Build.BuildNumber)'
+    script: 'echo $(Version.Revision) or variables["Version.Revision"]'
 - task: DotNetCoreCLI@2
   displayName: 'Pack Client'
   inputs:
