@@ -37,7 +37,7 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'echo $(Version.Revision) or variables["Version.Revision"]'
+    script: 'echo Version.MajorMinor - $(Version.MajorMinor) , Version.Revision - $(Version.Revision)'
 - task: DotNetCoreCLI@2
   displayName: 'Pack Client'
   inputs:
